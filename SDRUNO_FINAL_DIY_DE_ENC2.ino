@@ -4,6 +4,13 @@
 #include <Mouse.h>
 #include <Encoder.h>
 
+// German keyboard support
+// make true for german keyboard
+keyBoardDE = true
+
+// Echo keypresses over serial for debug
+debugMode = true
+
 //BUTTONS FOR ARDUINO Pro Micro
 int buttonPin1 = 7;//First button Rotary encoder 1 int
 int buttonPin2 = 4;//Second button Rotary encoder 2 int
@@ -53,8 +60,11 @@ void loop() {
   {
     Keyboard.press('V');
     delay(300);
-    Serial.println ("Pressed V");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+		Serial.println ("Pressed V");
+	}
   }
 
 //  //Second encoder button 2 for LO Lock
@@ -62,8 +72,11 @@ void loop() {
   {
     Keyboard.press('K');
     delay(300);
-    Serial.println ("Pressed K");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+    Serial.println ("Pressed K");
+	}
   }
 //
 //  //STAND ALONE BUTTONS 1-4
@@ -73,8 +86,11 @@ void loop() {
   {
     Keyboard.press('A');
     delay(300);
-    Serial.println ("Pressed A");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+    Serial.println ("Pressed A");
+	}
   }
 //
 //  //SECOND STAND ALONE BUTTON (MODE USB)
@@ -82,8 +98,11 @@ void loop() {
   {
     Keyboard.press('U');
         delay(300);
-    Serial.println ("Pressed U");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+    Serial.println ("Pressed U");
+	}
   }
 //
 //  //THIRD STAND ALONE BUTTON (MODE LSB)
@@ -91,8 +110,11 @@ void loop() {
   {
     Keyboard.press('L');
     delay(300);
-    Serial.println ("Pressed L");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+    Serial.println ("Pressed L");
+	}
   }
 //
 //  //FORTH STAND ALONE BUTTON (MODE FM)
@@ -100,8 +122,11 @@ void loop() {
   {
     Keyboard.press('F');
     delay(300);
-    Serial.println ("Pressed F");
     Keyboard.releaseAll();
+	if(debugMode==true)
+	{
+    Serial.println ("Pressed F");
+	}
   }
 
 //  ENCODER FUNTIONS
@@ -114,17 +139,22 @@ void loop() {
   // Right Encoder
   if(rightValue > 3)
   {
-    Serial.println("Tune up");
     knobRight.write(0);
     Keyboard.write(KEY_UP_ARROW);
+	if(debugMode==true){
+		Serial.println("Tune up");
+	}
     delay(100);
     //Keyboard.releaseAll();
   }
   else if(rightValue < -3)
   {
-    Serial.println("Tune down");
     knobRight.write(0);
     Keyboard.write(KEY_DOWN_ARROW);
+	if(keyBoardDE==true)
+	{
+	Serial.println("Tune down");
+	}
     delay(100);
     //Keyboard.releaseAll();
    }
@@ -134,20 +164,30 @@ void loop() {
   {
   if(leftValue > 3)
   {
-    Serial.println("Plus char");
     knobLeft.write(0);
-    unsigned char inChar = ('+'); //remove when US keyboard
-    unsigned char key = (usToDE[inChar]); //remove when US keyboard
+	if(keyBoardDE==true) {
+		unsigned char inChar = ('+'); //remove when US keyboard
+		unsigned char key = (usToDE[inChar]); //remove when US keyboard
+    }
     Keyboard.write(key); //send ('+') when US keyboard
+	if(debugMode==true)
+	{
+	Serial.println("Plus char");
+	}
     delay(100);
   }
   else if(leftValue < -3)
   {
-    Serial.println("Minus char");
      knobLeft.write(0);
-    unsigned char inChar = ('-'); //remove when US keyboard
-    unsigned char key = (usToDE[inChar]); //remove when US keyboard
+	 if(keyBoardDE==true {
+		unsigned char inChar = ('-'); //remove when US keyboard
+		unsigned char key = (usToDE[inChar]); //remove when US keyboard
+	 }
     Keyboard.write(key); //send ('-') when US keyboard
+	if(debugmode==true)
+	{
+	Serial.println("Minus char");
+	}
     delay(100);
   }
  }
